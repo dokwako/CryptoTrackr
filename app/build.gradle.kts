@@ -1,7 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.kotlin.compose)
     alias(libs.plugins.hilt)
     kotlin("kapt")
 }
@@ -18,6 +17,14 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        // Added this line to expose our CoinGecko API key to BuildConfig
+        buildConfigField(
+            "String",
+            "COINGECKO_API_KEY",
+            "\"${project.findProperty("COINGECKO_API_KEY")}\""
+        )
+
     }
 
     buildTypes {
@@ -38,8 +45,13 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 }
+kapt {
+    correctErrorTypes = true
+}
+
 
 dependencies {
 
@@ -69,14 +81,18 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
 
     //Hilt(DI)
-    implementation("com.google.dagger:hilt-android:2.48")
-    kapt("com.google.dagger:hilt-compiler:2.48")
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-compiler:2.48.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     //Compose Navigation
     implementation("androidx.navigation:navigation-compose:2.7.3")
 
     // Coil (image loading)
     implementation("io.coil-kt:coil-compose:2.6.0")
+    // Fix for Hilt + JavaPoet compatibility issue
+    implementation("com.squareup:javapoet:1.13.0")
+
 
 
 
