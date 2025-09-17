@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
     kotlin("kapt")
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -46,6 +47,9 @@ android {
     buildFeatures {
         compose = true
         buildConfig = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.14"
     }
 }
 kapt {
@@ -91,10 +95,15 @@ dependencies {
     // Coil (image loading)
     implementation("io.coil-kt:coil-compose:2.6.0")
     // Fix for Hilt + JavaPoet compatibility issue
-    implementation("com.squareup:javapoet:1.13.0")
+    //implementation("com.squareup:javapoet:1.13.0")
+
+    implementation("com.google.firebase:firebase-auth:23.0.0")
+    implementation("com.google.firebase:firebase-firestore:25.0.0")
+    implementation(platform("com.google.firebase:firebase-bom:34.2.0"))
 
 
 
 
 
 }
+apply(plugin = "com.google.gms.google-services")

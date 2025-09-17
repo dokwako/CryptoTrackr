@@ -1,6 +1,7 @@
 package com.example.cryptotrackr.di
 
 import com.example.cryptotrackr.data.CoinGeckoApi
+import com.google.firebase.auth.FirebaseAuth
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -41,4 +42,9 @@ object NetworkModule {
     fun provideCoinGeckoApi(retrofit: Retrofit): CoinGeckoApi {
         return retrofit.create(CoinGeckoApi::class.java)
     }
+
+    @Provides
+    @Singleton
+    fun provideFirebaseAuth(): FirebaseAuth = FirebaseAuth.getInstance()
+
 }

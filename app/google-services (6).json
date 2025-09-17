@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "881283538988",
+    "project_id": "cryptotrackr-e87e4",
+    "storage_bucket": "cryptotrackr-e87e4.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:881283538988:android:28ab7ec7af57ffeb6df189",
+        "android_client_info": {
+          "package_name": "com.example.cryptotrackr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDkJEW2XkhNk7l8AEqel_iFxq2sj258sR4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
