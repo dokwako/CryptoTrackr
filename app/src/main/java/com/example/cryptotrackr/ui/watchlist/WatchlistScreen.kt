@@ -10,14 +10,20 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 
 @Composable
-fun WatchlistScreen(viewModel: WatchlistViewModel) {
+fun WatchlistScreen(viewModel: WatchlistViewModel = hiltViewModel()) {
     val coins = viewModel.coins
 
     LaunchedEffect(Unit) { viewModel.loadWatchlist() }
 
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(16.dp)
+    ) {
         Text("My Watchlist", style = MaterialTheme.typography.headlineMedium)
         if (coins.isEmpty()) {
             Text("No favorites yet!")

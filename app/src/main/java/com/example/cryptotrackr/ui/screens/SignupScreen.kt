@@ -20,20 +20,26 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.cryptotrackr.viewmodel.AuthViewModel
 
 @Composable
 fun SignupScreen(
-    viewModel: AuthViewModel,
+    viewModel: AuthViewModel = viewModel(),
     onSignupSuccess: () -> Unit,
     onNavigateToLogin: () -> Unit
 ) {
-    val user = viewModel.user
+    val loginState by viewModel.loginState.collectAsStateWithLifecycle()
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    if (user != null) {
-        LaunchedEffect(Unit) { onSignupSuccess() }
+    // ✅ Trigger navigation if signup is successful
+    LaunchedEffect(loginState) {
+        if (loginState is AuthViewModel.LoginState.Success) {
+            onSignupSuccess()
+        }
     }
 
     Column(
@@ -41,22 +47,36 @@ fun SignupScreen(
         verticalArrangement = Arrangement.Center
     ) {
         Text("Sign Up", style = MaterialTheme.typography.headlineMedium)
-        OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text("Email") })
+
+        OutlinedTextField(
+            value = email,
+            onValueChange = { email = it },
+            label = { Text("Email") }
+        )
+
         OutlinedTextField(
             value = password,
             onValueChange = { password = it },
             label = { Text("Password") },
             visualTransformation = PasswordVisualTransformation()
         )
+
         Button(
-            onClick = { viewModel.signup(email, password) },
+            onClick = { viewModel.signUp(email, password) },
             modifier = Modifier.fillMaxWidth().padding(top = 8.dp)
-        ) { Text("Sign Up") }
+        ) {
+            Text("Sign Up")
+        }
 
-        TextButton(onClick = onNavigateToLogin) { Text("Already have an account? Login") }
+        TextButton(onClick = onNavigateToLogin) {
+            Text("Already have an account? Login")
+        }
 
-        viewModel.errorMessage?.let {
-            Text(it, color = Color.Red)
+        if (loginState is AuthViewModel.LoginState.Error) {
+            Text(
+                (loginState as AuthViewModel.LoginState.Error).message,
+                color = Color.Red
+            )
         }
     }
 }
