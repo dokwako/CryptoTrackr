@@ -19,7 +19,8 @@ This is a mobile application developed for the **Mastercraft program**, designed
 - 🧭 Bottom navigation with **Home, Transact, Services, and Grow** screens  
 - ❤️ Save favorite coins (Firebase integration)  
 - 🔑 User authentication with Firebase (Email/Google)  
-- 🌙 Modern UI built on Material Design 3  
+- 🌙 Modern UI built on Material Design 3
+-  
 
 ---
 
@@ -36,7 +37,15 @@ This is a mobile application developed for the **Mastercraft program**, designed
 
 ## ⚙️ Setup Instructions  
 
+
 ### 1. Clone the Repository  
 ```bash
 git clone https://github.com/yourusername/CryptoTrackr.git
 cd CryptoTrackr
+
+plugins {
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.compose.compiler) // ✅ new line
+    alias(libs.plugins.google.gms.googleServices)
+}
+
